@@ -6,47 +6,76 @@
     <title>Hoshcha Program Compilation List</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+            background: url('https://pbs.twimg.com/media/Fg2ejgvVIAIgJkn.jpg:large') no-repeat center center fixed;
+            background-size: cover;
             margin: 0;
-            padding: 20px;
-            line-height: 1.6;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            backdrop-filter: blur(2px); /* Blur effect */
+            color: #ffffff;
+            text-shadow: 0 0 5px #ffffff; /* Neon glow */
         }
+
         header {
             text-align: center;
-            padding: 10px;
-            background-color: #007acc;
-            color: white;
-            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ffffff;
+            margin-bottom: 20px;
         }
+
         header h1 {
+            font-size: 2em;
+            color: #ffffff;
             margin: 0;
         }
+
         .list-container {
-            max-width: 800px;
-            margin: 20px auto;
+            max-width: 1000px;
+            font-family: 'calibri', sans-serif; /* Cyberpunk font */
+            width: 90%;
+            background: rgba(0, 0, 0, 0.8); /* Dark transparent background */
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ffffff;
             padding: 20px;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: left;
         }
+
         .list-container ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
+
         .list-container li {
-            margin: 10px 0;
+            margin: 20px 0;
+            transition: transform 0.3s ease-in-out;
         }
+
         .list-container a {
             text-decoration: none;
-            color: #007acc;
+            color: #ffffff; /* Neon pink for links */
             font-weight: bold;
+            font-size: 1.2em;
+            transition: color 0.3s, text-shadow 0.3s;
         }
+
         .list-container a:hover {
-            color: #005b99;
+            color: #00f4ff;
+            text-shadow: 0 0 10px #00f4ff;
+            transform: scale(1.05);
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
