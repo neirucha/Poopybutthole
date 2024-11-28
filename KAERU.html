@@ -3,170 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversion Tool</title>
+    <title>Hoshcha Program Compilation List</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
         body {
-            font-family: 'Orbitron', sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
             background: url('https://pbs.twimg.com/media/Fg2ejgvVIAIgJkn.jpg:large') no-repeat center center fixed;
             background-size: cover;
-            height: 100vh;
+            margin: 0;
+            padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            height: 100vh;
+            backdrop-filter: blur(2px); /* Blur effect */
             color: #ffffff;
-            position: cover;
-            overflow: hidden;
-        }
-
-        /* Backdrop blur applied to entire background */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: inherit;  /* Inherits the background image */
-            filter: blur(2px);  /* Adjust blur intensity here */
-            z-index: -1;
-        }
-
-        .container {   /* New container for centering the content */
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
-            background: rgba(20, 20, 20, 0.85);
-            border: 2px solid #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #ffffff;
-            text-align: center;
+            text-shadow: 0 0 5px #ffffff; /* Neon glow */
         }
 
         header {
-            background: rgba(0, 0, 0, 0.7);
-            color: #ffffff;
-            padding: 10px 0;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            border: 1px solid #ffffff;
             border-radius: 10px;
-            border: 2px solid #ffffff;
+            box-shadow: 0 0 20px #ffffff;
             margin-bottom: 20px;
         }
 
-        .converter label, .converter select, .converter input, .converter button {
-            display: block;
+        header h1 {
+            font-size: 2em;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .list-container {
+            max-width: 1200px;
+            font-family: 'calibri', sans-serif; /* Cyberpunk font */
             width: 90%;
-            margin:10px auto;
-            padding: 10px;
-            font-size: 16px;
-            background: #111;
-            color: #ffffff;
+            font-size: 20px;
+            background: rgba(0, 0, 0, 0.8); /* Dark transparent background */
             border: 1px solid #ffffff;
-            border-radius: 5px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ffffff;
+            padding: 20px;
+            text-align: left;
         }
 
-        .converter button {
-            background-color: #ffffff;
-            color: black;
-            cursor: pointer;
-            transition: all 0.3s;
+        .list-container ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
         }
 
-        .converter button:hover {
-            background-color: #00fff6;
-            color: black;
-            border-color: #00fff6;
-            box-shadow: 0 0 15px #00fff6;
+        .list-container li {
+            margin: 20px 0;
+            transition: transform 0.3s ease-in-out;
         }
 
-        .converter .result {
-            font-weight: bold;
-            color: #ffffff;
-            margin-top: 15px;
-            font-size: 20px;
-        }
-
-        /* Back Button Styling */
-        .back-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: #ffffff;
-            font-size: 20px;
+        .list-container a {
             text-decoration: none;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 15px;
-            border-radius: 5px;
-            border: 2px solid #ffffff;
-            box-shadow: 0 0 10px #ffffff;
-            transition: all 0.3s;
+            color: #ffffff; /* Neon pink for links */
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: color 0.3s, text-shadow 0.3s;
         }
 
-        .back-button:hover {
-            background-color: #00fff6;
-            color: black;
-            border-color: #00fff6;
-            box-shadow: 0 0 15px #00fff6;
+        .list-container a:hover {
+            color: #00f4ff;
+            text-shadow: 0 0 10px #00f4ff;
+            transform: scale(1.05);
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<a href="https://neirucha.github.io/TACTICA/" class="back-button">← Back</a>  <!-- Back Button -->
+<header>
+    <h1>CS 1130 - Introduction to Computing</h1>
+    <p>Hoshcha Program Compilation List</p>
+</header>
 
-<div class="container">
-    <header>
-        <h1>Conversion Tool</h1>
-        <p>Select a conversion type and enter a value</p>
-    </header>
-
-    <div class="converter">
-        <label for="conversionType">Choose Conversion:</label>
-        <select id="conversionType">
-            <option value="cToF">Celsius to Fahrenheit</option>
-            <option value="fToC">Fahrenheit to Celsius</option>
-            <option value="mToFt">Meters to Feet</option>
-            <option value="ftToM">Feet to Meters</option>
-        </select>
-
-        <input type="number" id="inputValue" placeholder="Enter value">
-        <button onclick="convert()">Convert</button>
-        <p class="result" id="result"></p>
-    </div>
+<div class="list-container">
+    <ul>
+        <li><a href="KAERU.html" title="View Assignment 1">Assignment #1 - Conversion (Celsius to Fahrenheit, Fahrenheit to Celsius, Meters to Feet, Feet to Meters)</a></li>
+        <li><a href="TAXTIME.html" title="View Assignment 2">Assignment #2 - Income Tax Calculator</a></li>
+        <li><a href="INSHI.html" title="View Assignment 3">Assignment #3 - Factorial (While Loop), Sum (Do While Loop) and Average (For Loop) of First N Natural Numbers</a></li>
+        <li><a href="PAYDAY.htnml" title="View Assignment 4">Assignment #4 - Simple Payroll</a></li>
+    </ul>
 </div>
-
-<script>
-    function convert() {
-        const conversionType = document.getElementById('conversionType').value;
-        const inputValue = parseFloat(document.getElementById('inputValue').value);
-        let resultText = '';
-
-        if (isNaN(inputValue)) {
-            resultText = 'Please enter a valid number.';
-        } else {
-            switch(conversionType) {
-                case 'cToF':
-                    resultText = (inputValue * 9/5 + 32).toFixed(2) + ' °Fahrenheit';
-                    break;
-                case 'fToC':
-                    resultText = ((inputValue - 32) * 5/9).toFixed(2) + ' °Celsius';
-                    break;
-                case 'mToFt':
-                    resultText = (inputValue * 3.28084).toFixed(2) + ' feet';
-                    break;
-                case 'ftToM':
-                    resultText = (inputValue / 3.28084).toFixed(2) + ' meters';
-                    break;
-                default:
-                    resultText = 'Invalid conversion type.';
-            }
-        }
-
-        document.getElementById('result').innerText = resultText;
-    }
-</script>
 
 </body>
 </html>
