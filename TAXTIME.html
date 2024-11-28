@@ -1,1 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Tax Calculator</title>
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+            background: url('https://pbs.twimg.com/media/Fg2ejgvVIAIgJkn.jpg:large') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            backdrop-filter: blur(5px); /* Strong blur effect */
+            color: #ffffff;
+            text-shadow: 0 0 10px #ffffff; /* Neon glow */
+        }
 
+        header {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ffffff;
+            margin-bottom: 20px;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-color: #00f4ff;
+            box-shadow: 0 0 8px #00f4ff;
+        }
+
+        button {
+            background-color: #00f4ff;
+            color: #111;
+            padding: 12px 18px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #00fff6;
+            transform: scale(1.05);
+        }
+
+        /* Removed box and animation from result */
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px; /* Reduced padding */
+        }
+
+        .tax-table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+        }
+
+        .tax-table th, .tax-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .tax-table th {
+            background-color: #333;
+        }
+
+        .tax-table td {
+            color: #ffffff;
+        }
+
+        .tax-table tr:hover {
+            background-color: #222;
+        }
+
+        .tax-table a {
+            color: #00f4ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .tax-table a:hover {
+            color: #00fff6;
+            text-shadow: 0 0 10px #00fff6;
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>Income Tax Calculator</h1>
+        <p>Calculate your income tax based on the current tax brackets</p>
+    </header>
+
+    <div class="container">
+        <div class="form-group">
+            <label for="taxableIncome">Enter Taxable Income (PHP):</label>
+            <input type="number" id="taxableIncome" placeholder="Enter your taxable income" />
+        </div>
+        <button onclick="calculateTax()">Calculate Income Tax</button>
+
+        <!-- Removed box and animation for result -->
+        <div class="result" id="result"></div>
+
+        <h3>Tax Brackets</h3>
+        <table class="tax-table">
+            <tr>
+                <th>Amount of Net Taxable Income</th>
+                <th>Basic Tax + Rate</th>
+            </tr>
+            <tr>
+                <td>Over - P250,000</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td>P250,000 to P400,000</td>
+                <td>20% of the excess over P250,000</td>
+            </tr>
+            <tr>
+                <td>P400,000 to P800,000</td>
+                <td>P30,000 + 25% of the excess over P400,000</td>
+            </tr>
+            <tr>
+                <td>P800,000 to P2,000,000</td>
+                <td>P130,000 + 30% of the excess over P800,000</td>
+            </tr>
+            <tr>
+                <td>P2,000,000 to P8,000,000</td>
+                <td>P490,000 + 32% of the excess over P2,000,000</td>
+            </tr>
+            <tr>
+                <td>Over P8,000,000</td>
+                <td>P2,410,000 + 35% of the excess over P8,000,000</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        function calculateTax() {
+            const taxableIncome = parseFloat(document.getElementById('taxableIncome').value);
+            let tax = 0;
+
+            if (isNaN(taxableIncome) || taxableIncome <= 0) {
+                document.getElementById('result').innerHTML = "Please enter a valid taxable income.";
+                return;
+            }
+
+            // Income tax brackets
+            if (taxableIncome <= 250000) {
+                tax = 0;
+            } else if (taxableIncome <= 400000) {
+                tax = (taxableIncome - 250000) * 0.20;
+            } else if (taxableIncome <= 800000) {
+                tax = 30000 + (taxableIncome - 400000) * 0.25;
+            } else if (taxableIncome <= 2000000) {
+                tax = 130000 + (taxableIncome - 800000) * 0.30;
+            } else if (taxableIncome <= 8000000) {
+                tax = 490000 + (taxableIncome - 2000000) * 0.32;
+            } else {
+                tax = 2410000 + (taxableIncome - 8000000) * 0.35;
+            }
+
+            // Format result with commas
+            const formattedTax = tax.toLocaleString('en-US');
+
+            document.getElementById('result').innerHTML = `Income Tax: PHP ${formattedTax}`;
+        }
+    </script>
+</body>
+</html>
