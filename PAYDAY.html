@@ -1,1 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll Management System</title>
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: url('https://pbs.twimg.com/media/Fg2ejgvVIAIgJkn.jpg:large') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            backdrop-filter: blur(2px);
+            color: #ffffff;
+            text-shadow: 0 0 10px #ffffff;
+        }
 
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ffffff;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ffffff;
+            padding: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: calc(100% - 10px);
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #00f4ff;
+            box-shadow: 0 0 8px #00f4ff;
+            outline: none;
+        }
+
+        button {
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 12px 18px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #ff6b6b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        #deleteAll {
+            margin-top: 20px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-button:hover {
+            background-color: #ff6b6b;
+        }
+
+        .back-button::before {
+            content: "←";
+            margin-right: 10px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button class="back-button" onclick="goBack()">Back</button>
+
+    <div class="content-wrapper">
+        <header>
+            <h1>Payroll Management System</h1>
+        </header>
+
+        <div class="container">
+            <form id="payrollForm">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="EMPLOYEE NAME 名前" required>
+                    <input type="number" id="daysWorked" placeholder="DAYS WORKED 献身" min="0" required>
+                    <input type="number" id="dailyRate" placeholder="DAILY RATE 褒美" min="0" required>
+                    <input type="number" id="deduction" placeholder="DEDUCTION 罰" min="0" required>
+                </div>
+                <button type="submit">Add Employee</button>
+            </form>
+
+            <table id="payrollTable">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Employee Name</th>
+                        <th>Days Worked</th>
+                        <th>Daily Rate</th>
+                        <th>Gross Pay</th>
+                        <th>Deduction Amount</th>
+                        <th>Net Pay</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button id="deleteAll">Delete All</button>
+        </div>
+    </div>
+
+    <script>
+        const payrollTable = document.querySelector("#payrollTable tbody");
+        const payrollForm = document.getElementById("payrollForm");
+        const deleteAllBtn = document.getElementById("deleteAll");
+
+        let payrollData = [];
+
+        function renderTable() {
+            payrollTable.innerHTML = "";
+            payrollData.forEach((employee, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${employee.name}</td>
+                    <td>${employee.daysWorked}</td>
+                    <td>${employee.dailyRate}</td>
+                    <td>${employee.grossPay.toFixed(2)}</td>
+                    <td>${employee.deduction.toFixed(2)}</td>
+                    <td>${employee.netPay.toFixed(2)}</td>
+                    <td>
+                        <button onclick="deleteEmployee(${index})">Delete</button>
+                    </td>
+                `;
+                payrollTable.appendChild(row);
+            });
+        }
+
+        payrollForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("name").value.trim();
+            const daysWorked = parseFloat(document.getElementById("daysWorked").value);
+            const dailyRate = parseFloat(document.getElementById("dailyRate").value);
+            const deduction = parseFloat(document.getElementById("deduction").value);
+
+            const grossPay = daysWorked * dailyRate;
+            const netPay = grossPay - deduction;
+
+            payrollData.push({ name, daysWorked, dailyRate, deduction, grossPay, netPay });
+            renderTable();
+            payrollForm.reset();
+        });
+
+        window.deleteEmployee = (index) => {
+            if (confirm("Are you sure you want to obliterate this data?")) {
+                payrollData.splice(index, 1);
+                renderTable();
+            }
+        };
+
+        deleteAllBtn.addEventListener("click", () => {
+            if (confirm("You're absolutely SURE you wanna do this?")) {
+                if (confirm("This action cannot be undone. check yourself...)) {
+                    payrollData = [];
+                    renderTable();
+                }
+            }
+        });
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
