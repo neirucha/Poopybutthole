@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hoshcha Program Compilation List</title>
+    <title>Unit Conversion Tool</title>
     <style>
         body {
-            font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+            font-family: 'Orbitron', sans-serif;
             background: url('https://pbs.twimg.com/media/Fg2ejgvVIAIgJkn.jpg:large') no-repeat center center fixed;
             background-size: cover;
             margin: 0;
@@ -16,83 +16,195 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            backdrop-filter: blur(2px); /* Blur effect */
+            backdrop-filter: blur(5px);
             color: #ffffff;
-            text-shadow: 0 0 5px #ffffff; /* Neon glow */
+            text-shadow: 0 0 10px #ffffff;
         }
 
         header {
             text-align: center;
-            font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+            font-family: 'Orbitron', sans-serif;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            background: rgba(0, 0, 0, 0.7);
             border: 1px solid #ffffff;
             border-radius: 10px;
             box-shadow: 0 0 20px #ffffff;
             margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
         }
 
         header h1 {
-            font-size: 2em;
+            font-size: 2.5em;
             color: #ffffff;
             margin: 0;
         }
 
-        .list-container {
-            max-width: 1200px;
-            font-family: 'calibri', sans-serif; /* Cyberpunk font */
+        .container {
+            max-width: 600px;
             width: 90%;
-            font-size: 20px;
-            background: rgba(0, 0, 0, 0.8); /* Dark transparent background */
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.85);
             border: 1px solid #ffffff;
             border-radius: 10px;
             box-shadow: 0 0 20px #ffffff;
             padding: 20px;
-            text-align: left;
+            text-align: center;
         }
 
-        .list-container ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        .list-container li {
-            margin: 20px 0;
-            transition: transform 0.3s ease-in-out;
+        label {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 8px;
         }
 
-        .list-container a {
-            text-decoration: none;
-            color: #ffffff; /* Neon pink for links */
-            font-weight: bold;
-            font-size: 1.2em;
-            transition: color 0.3s, text-shadow 0.3s;
+        input[type="number"], select {
+            width: 100%;
+            max-width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
         }
 
-        .list-container a:hover {
-            color: #00f4ff;
-            text-shadow: 0 0 10px #00f4ff;
+        input[type="number"]:focus, select:focus {
+            border-color: #00f4ff;
+            box-shadow: 0 0 8px #00f4ff;
+            outline: none;
+        }
+
+        button {
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 12px 18px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #ff6b6b;
             transform: scale(1.05);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Back Button Styling */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            max-width: 100px;
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-button:hover {
+            background-color: #ff6b6b;
+            transform: scale(1.05);
+        }
+
+        .back-button::before {
+            content: "←"; /* Left arrow */
+            margin-right: 10px;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header>
-    <h1>CS 1130 - Introduction to Computing</h1>
-    <p>Hoshcha Program Compilation List</p>
-</header>
+    <!-- Back Button -->
+    <button class="back-button" onclick="goBack()">Back</button>
 
-<div class="list-container">
-    <ul>
-        <li><a href="KAERU.html" title="View Assignment 1">Assignment #1 - Conversion (Celsius to Fahrenheit, Fahrenheit to Celsius, Meters to Feet, Feet to Meters)</a></li>
-        <li><a href="TAXTIME.html" title="View Assignment 2">Assignment #2 - Income Tax Calculator</a></li>
-        <li><a href="INSHI.html" title="View Assignment 3">Assignment #3 - Factorial (While Loop), Sum (Do While Loop) and Average (For Loop) of First N Natural Numbers</a></li>
-        <li><a href="PAYDAY.htnml" title="View Assignment 4">Assignment #4 - Simple Payroll</a></li>
-    </ul>
-</div>
+    <header>
+        <h1>Unit Conversion Tool</h1>
+        <p>Convert between Celsius, Fahrenheit, Meters, and Feet</p>
+    </header>
+
+    <div class="container">
+        <div class="form-group">
+            <label for="conversionType">Select Conversion Type:</label>
+            <select id="conversionType" onchange="clearInput()">
+                <option value="cToF">Celsius to Fahrenheit</option>
+                <option value="fToC">Fahrenheit to Celsius</option>
+                <option value="mToF">Meters to Feet</option>
+                <option value="fToM">Feet to Meters</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="inputValue">Enter Value:</label>
+            <input type="number" id="inputValue" placeholder="Enter value" />
+        </div>
+
+        <button onclick="convert()">Convert</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function convert() {
+            let inputValue = parseFloat(document.getElementById("inputValue").value);
+            let conversionType = document.getElementById("conversionType").value;
+            let result = '';
+
+            if (isNaN(inputValue)) {
+                result = "Please enter a valid number.";
+            } else {
+                switch (conversionType) {
+                    case "cToF":
+                        result = `${inputValue}°C = ${(inputValue * 9/5 + 32).toFixed(2)}°F`;
+                        break;
+                    case "fToC":
+                        result = `${inputValue}°F = ${((inputValue - 32) * 5/9).toFixed(2)}°C`;
+                        break;
+                    case "mToF":
+                        result = `${inputValue} meters = ${(inputValue * 3.28084).toFixed(2)} feet`;
+                        break;
+                    case "fToM":
+                        result = `${inputValue} feet = ${(inputValue / 3.28084).toFixed(2)} meters`;
+                        break;
+                }
+            }
+
+            document.getElementById("result").innerText = result;
+        }
+
+        function clearInput() {
+            document.getElementById("inputValue").value = '';
+            document.getElementById("result").innerText = '';
+        }
+
+        // Function for the back button
+        function goBack() {
+            window.location.href = "https://neirucha.github.io/TACTICA/"; // Change the URL here as needed
+        }
+    </script>
 
 </body>
 </html>
