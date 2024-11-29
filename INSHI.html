@@ -1,1 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factorial, Sum, and Average Calculator</title>
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
+            background: url('https://pbs.twimg.com/media/Fg2ejgvVIAIgJkn.jpg:large') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            backdrop-filter: blur(2px); /* Strong blur effect */
+            color: #ffffff;
+            text-shadow: 0 0 10px #ffffff; /* Neon glow */
+        }
 
+        header {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ffffff;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Input Box Styling with updated color scheme */
+        input[type="number"] {
+            width: 100%;
+            max-width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.2); /* Light background with transparency */
+            color: #ffffff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="number"]:focus {
+            border-color: #00f4ff;
+            box-shadow: 0 0 8px #00f4ff;
+            outline: none;
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #ff4d4d; /* Reddish-pink color */
+            color: #fff;
+            padding: 12px 18px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #ff6b6b; /* Lighter red-pink on hover */
+        }
+
+        .result {
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px; /* Reduced padding */
+        }
+
+        /* Back Button Styling */
+        .back-button {
+            position: absolute;
+            max-width: 100px;
+            top: 20px;
+            left: 20px;
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-button:hover {
+            background-color: #ff6b6b;
+        }
+
+        .back-button::before {
+            content: "←"; /* Left arrow */
+            margin-right: 10px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="goBack()">Back</button>
+
+    <header>
+        <h1>Factorial, Sum, and Average Calculator</h1>
+    </header>
+
+    <div class="container">
+        <div class="form-group">
+            <label for="n">Enter a Number:</label>
+            <input type="number" id="n" placeholder="整数" min="1" />
+        </div>
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div class="result" id="results"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const n = parseInt(document.getElementById("n").value);
+            let factorial = 1;
+            let sum = 0;
+            let average = 0;
+            let resultText = "";
+
+            // Validate the input
+            if (isNaN(n) || n <= 0) {
+                resultText = "Please enter a valid positive integer.";
+                document.getElementById("results").innerText = resultText;
+                return;
+            }
+
+            // 1. Calculate factorial using While Loop
+            let i = n;
+            while (i > 1) {
+                factorial *= i;
+                i--;
+            }
+
+            // 2. Calculate the sum of the first n numbers using Do While Loop
+            let counter = 1;
+            do {
+                sum += counter;
+                counter++;
+            } while (counter <= n);
+
+            // 3. Calculate the average of the first n numbers using For Loop
+            for (let i = 1; i <= n; i++) {
+                average += i;
+            }
+            average = average / n;
+
+            // Display the results
+            resultText = `
+                Factorial of ${n}: ${factorial}<br>
+                Sum of the first ${n} numbers: ${sum}<br>
+                Average of the first ${n} numbers: ${average.toFixed(2)}
+            `;
+            document.getElementById("results").innerHTML = resultText;
+        }
+
+        // Function for the back button
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+</body>
+</html>
