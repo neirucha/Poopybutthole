@@ -12,21 +12,13 @@
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             backdrop-filter: blur(2px);
             color: #ffffff;
             text-shadow: 0 0 10px #ffffff;
-        }
-
-        .content-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 90%;
-            max-width: 800px;
         }
 
         header {
@@ -38,6 +30,7 @@
             box-shadow: 0 0 20px #ffffff;
             margin-bottom: 20px;
             width: 100%;
+            max-width: 900px;
         }
 
         header h1 {
@@ -46,8 +39,8 @@
         }
 
         .container {
+            max-width: 900px;
             width: 100%;
-            font-size: 18px;
             background: rgba(0, 0, 0, 0.85);
             border: 1px solid #ffffff;
             border-radius: 10px;
@@ -55,26 +48,20 @@
             padding: 20px;
         }
 
-        .form-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        input[type="text"], input[type="number"] {
+        .form-group input {
             width: calc(100% - 10px);
-            padding: 10px;
+            padding: 12px;
+            margin: 5px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 8px;
             background-color: rgba(255, 255, 255, 0.2);
             color: #ffffff;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
         }
 
-        input[type="text"]:focus, input[type="number"]:focus {
+        .form-group input:focus {
             border-color: #00f4ff;
             box-shadow: 0 0 8px #00f4ff;
             outline: none;
@@ -89,6 +76,8 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            margin: 10px 0;
+            width: 100%;
         }
 
         button:hover {
@@ -99,25 +88,25 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            color: #fff;
         }
 
         th, td {
-            border: 1px solid #ddd;
+            border: 1px solid #ffffff;
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
 
         th {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(0, 0, 0, 0.7);
         }
 
-        #deleteAll {
-            margin-top: 20px;
+        td {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .back-button {
-            position: fixed;
+            position: absolute;
+            max-width: 100px;
             top: 20px;
             left: 20px;
             background-color: #ff4d4d;
@@ -127,9 +116,7 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-            display: flex;
-            align-items: center;
+            transition: background-color 0.3s ease;
         }
 
         .back-button:hover {
@@ -137,7 +124,7 @@
         }
 
         .back-button::before {
-            content: "←";
+            content: "\2190"; /* Left arrow */
             margin-right: 10px;
         }
     </style>
@@ -146,43 +133,42 @@
 <body>
     <button class="back-button" onclick="goBack()">Back</button>
 
-    <div class="content-wrapper">
-        <header>
-            <h1>Payroll Management System</h1>
-        </header>
+    <header>
+        <h1>Payroll Management System</h1>
+    </header>
 
-        <div class="container">
-            <form id="payrollForm">
-                <div class="form-group">
-                    <input type="text" id="name" placeholder="EMPLOYEE NAME 名前" required>
-                    <input type="number" id="daysWorked" placeholder="DAYS WORKED 献身" min="0" required>
-                    <input type="number" id="dailyRate" placeholder="DAILY RATE 褒美" min="0" required>
-                    <input type="number" id="deduction" placeholder="DEDUCTION 罰" min="0" required>
-                </div>
-                <button type="submit">Add Employee</button>
-            </form>
+    <div class="container">
+        <form id="payrollForm">
+            <div class="form-group">
+                <input type="text" id="name" placeholder="EMPLOYEE NAME 名前" required>
+                <input type="number" id="daysWorked" placeholder="DAYS WORKED 献身" min="0" required>
+                <input type="number" id="dailyRate" placeholder="DAILY RATE 褒美" min="0" required>
+                <input type="number" id="deduction" placeholder="DEDUCTION 罰" min="0" required>
+            </div>
+            <button type="submit">Add Employee</button>
+        </form>
 
-            <table id="payrollTable">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Employee Name</th>
-                        <th>Days Worked</th>
-                        <th>Daily Rate</th>
-                        <th>Gross Pay</th>
-                        <th>Deduction Amount</th>
-                        <th>Net Pay</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <button id="deleteAll">Delete All</button>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Employee Name</th>
+                    <th>Days Worked</th>
+                    <th>Daily Rate</th>
+                    <th>Gross Pay</th>
+                    <th>Deduction Amount</th>
+                    <th>Net Pay</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="payrollTable">
+            </tbody>
+        </table>
+        <button id="deleteAll">Delete All</button>
     </div>
 
     <script>
-        const payrollTable = document.querySelector("#payrollTable tbody");
+        const payrollTable = document.querySelector("#payrollTable");
         const payrollForm = document.getElementById("payrollForm");
         const deleteAllBtn = document.getElementById("deleteAll");
 
@@ -215,24 +201,26 @@
             const dailyRate = parseFloat(document.getElementById("dailyRate").value);
             const deduction = parseFloat(document.getElementById("deduction").value);
 
-            const grossPay = daysWorked * dailyRate;
-            const netPay = grossPay - deduction;
+            if (name && !isNaN(daysWorked) && !isNaN(dailyRate) && !isNaN(deduction)) {
+                const grossPay = daysWorked * dailyRate;
+                const netPay = grossPay - deduction;
 
-            payrollData.push({ name, daysWorked, dailyRate, deduction, grossPay, netPay });
-            renderTable();
-            payrollForm.reset();
+                payrollData.push({ name, daysWorked, dailyRate, deduction, grossPay, netPay });
+                renderTable();
+                payrollForm.reset();
+            }
         });
 
-        window.deleteEmployee = (index) => {
-            if (confirm("Are you sure you want to obliterate this data?")) {
+        function deleteEmployee(index) {
+            if (confirm("You're sure right?")) {
                 payrollData.splice(index, 1);
                 renderTable();
             }
-        };
+        }
 
         deleteAllBtn.addEventListener("click", () => {
-            if (confirm("You're absolutely SURE you wanna do this?")) {
-                if (confirm("This action cannot be undone. check yourself...)) {
+            if (confirm("Purge records?")) {
+                if (confirm("You can't go back.. Be fr.")) {
                     payrollData = [];
                     renderTable();
                 }
