@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: 'Orbitron', sans-serif; /* Cyberpunk font */
-            background: url('https://pbs.twimg.com/media/Fg2ejgvVIAIgJkn.jpg:large') no-repeat center center fixed;
-            background-size: cover;
+            background: url('https://pbs.twimg.com/media/Fg2ejgvVIAIgJkn.jpg:large') no-repeat center center fixed; /* Background image */
+            background-size: cover; /* Cover the entire screen */
             margin: 0;
             padding: 0;
             display: flex;
@@ -19,6 +19,8 @@
             backdrop-filter: blur(2px); /* Blur effect */
             color: #ffffff;
             text-shadow: 0 0 5px #ffffff; /* Neon glow */
+            overflow: hidden; /* Hide overflow to avoid scrollbars */
+            position: relative;
         }
 
         header {
@@ -29,6 +31,11 @@
             border: 1px solid #ffffff;
             box-shadow: 0 0 20px #ffffff;
             margin-bottom: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        header:hover {
+            transform: translateY(-5px); /* Hover effect */
         }
 
         header h1 {
@@ -47,6 +54,11 @@
             box-shadow: 0 0 20px #ffffff;
             padding: 20px;
             text-align: left;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .list-container:hover {
+            transform: translateY(-5px); /* Hover effect */
         }
 
         .list-container ul {
@@ -62,7 +74,7 @@
 
         .list-container a {
             text-decoration: none;
-            color: #ffffff; /* Neon pink for links */
+            color: #ffffff; /* Neon white for links */
             font-weight: bold;
             font-size: 1.2em;
             transition: color 0.3s, text-shadow 0.3s;
@@ -72,6 +84,15 @@
             color: #ff6666;
             text-shadow: 0 0 10px #ff6666;
             transform: scale(1.05);
+        }
+
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place behind content */
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
@@ -83,6 +104,8 @@
     <p>Hoshcha Program Compilation List</p>
 </header>
 
+<div id="particles-js"></div>
+
 <div class="list-container">
     <ul>
         <li><a href="KAERU.html" title="View Assignment 1">Assignment I - Conversion (Celsius to Fahrenheit, Fahrenheit to Celsius, Meters to Feet, Feet to Meters)</a></li>
@@ -91,6 +114,85 @@
         <li><a href="PAYDAY.html" title="View Assignment 4">Assignment IV - Simple Payroll</a></li>
     </ul>
 </div>
+
+<!-- Add the particles.js script -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    // Initialize particles.js
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 100, // Number of particles
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: "#ffffff" /* White color */
+            },
+            shape: {
+                type: "circle", // Simple circle for particles
+                stroke: {
+                    width: 0,
+                    color: "#ffffff"
+                }
+            },
+            opacity: {
+                value: 0.6,
+                random: true,
+                anim: {
+                    enable: true,
+                    speed: 1,
+                    opacity_min: 0.1,
+                    sync: false
+                }
+            },
+            size: {
+                value: 5,
+                random: true,
+                anim: {
+                    enable: true,
+                    speed: 2,
+                    size_min: 0.1,
+                    sync: false
+                }
+            },
+            move: {
+                enable: true,
+                speed: 1, // Speed of particles
+                direction: "none", // Allow particles to move in any direction
+                random: true,
+                straight: false,
+                out_mode: "out",
+                bounce: false,
+                attract: {
+                    enable: false, // Disable attraction
+                }
+            }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: "push", // Particles move away from the cursor
+                    parallax: {
+                        enable: true,
+                        smooth: 10, // Smoothness for a less abrupt movement
+                        force: 3 // Reduced force for subtle interaction
+                    }
+                },
+                onclick: {
+                    enable: false,
+                    mode: "push"
+                },
+                resize: true
+            }
+        },
+        retina_detect: true
+    });
+</script>
 
 </body>
 </html>
